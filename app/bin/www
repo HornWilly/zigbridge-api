@@ -90,5 +90,9 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-zigbridgeClient.connect('127.0.0.1', 5818);
+zigbridgeClient.isConnected = false;
+zigbridgeClient.addr = '127.0.0.1';
+zigbridgeClient.port = 5818;
+zigbridgeClient.connect();
+zigbridgeClient.init();
 
