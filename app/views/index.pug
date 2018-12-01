@@ -1,5 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main(role="main" class="container")
+      div(class="card" id="learnDeviceCard")
+          div(class="card-header") Start learning Device
+          div(class="card-body")
+              form(id="startLearnForm")
+                  button(type="submit",class="btn btn-primary") Start Learn
+
+  script(src="/javascripts/main.js")
