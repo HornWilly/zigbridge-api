@@ -5,6 +5,7 @@
             this.socket = null;
             this.devices = [];
             this.url = window.location.hostname;
+            this.fullUrl = window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '');
         }
 
         setup() {
@@ -15,7 +16,8 @@
             let startLearnForm = $('#startLearnForm');
             startLearnForm.submit(function (event) {
                 client.startLearn((res) => {
-                    this.logMessage(res);
+                    console.log(res);
+                    client.logMessage(res);
                 });
                 event.preventDefault();
             });
@@ -23,11 +25,12 @@
 
         logMessage(mesg) {
             let consoleCard = $('#consoleCard');
-            consoleCard.append('<samp>'+mesg+'</samp>');
+            var json = JSON.stringify(mesg);
+            consoleCard.append('<samp>'+json+'</samp>');
         }
 
         wsConnect() {
-            let wsUrl = 'ws://'+this.url+':1337/events/websocket';
+            let wsUrl = 'ws://'+this.url+':1337/';
             let socket = new WebSocket(wsUrl);
             socket.onopen = (event) => {
                 this.logMessage('[websocket] Connected');
@@ -36,16 +39,16 @@
                 }, 1000);
             };
             socket.onmessage = (event) => {
-                this.onMessage(JSON.parse(event.data));
+                this.logMessage(JSON.parse(event.data));
             };
             this.socket = socket;
         }
 
-        startLearn(email, password, env, next) {
-            let url = this.url + "/oauth/oauth/v2/token";
+        startLearn(next) {
+            let url = this.fullUrl + "/start-learn";
 
             $.post(url, (res) => {
-                next(null, res);
+                next(res);
             }).fail(() => {
                 alert('StartLearn failed');
             });

@@ -75,8 +75,8 @@ var webSocketService = module.exports = {
     broadcastMessage: function(message) {
         // broadcast message to all connected clients
         var json = JSON.stringify(message);
-        for (var i=0; i < clients.length; i++) {
-          clients[i].sendUTF(json);
+        for (var i=0; i < webSocketService.clients.length; i++) {
+            webSocketService.clients[i].sendUTF(json);
         }
     }
 }

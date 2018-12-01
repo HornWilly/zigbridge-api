@@ -1,5 +1,6 @@
 var net = require('net');
 var debug = require('debug')('app:server');
+var webSocketService = require('./ws');
 
 /**
  * Client connection on zigbridge
@@ -10,6 +11,8 @@ var ZigbridgeClient = module.exports = {
     init: function() {
       ZigbridgeClient.client.on('data', function(data) {
         debug('Received: ' + data);
+        // Broadcast to all websocket client
+        webSocketService.broadcastMessage(JSON.parse(data));
       });
       
       ZigbridgeClient.client.on('close', function() {
