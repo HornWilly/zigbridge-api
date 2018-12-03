@@ -4,10 +4,10 @@ Api for zigbridge
 https://github.com/Tropicao/zigbridge
 
 change directory:
-$ cd app
+> $ cd app
 
 install dependencies:
-$ npm install
+> $ npm install
 
 run the app:
-$ DEBUG=app:* npm start
+> $ DEBUG=app:* npm start
